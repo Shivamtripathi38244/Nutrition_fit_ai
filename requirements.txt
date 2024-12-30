@@ -31,7 +31,6 @@ crewai-tools==0.17.0
 cryptography==43.0.3
 dataclasses-json==0.6.7
 db==0.1.1
-db-sqlite3==0.0.1
 decorator==5.1.1
 Deprecated==1.2.15
 deprecation==2.1.0
