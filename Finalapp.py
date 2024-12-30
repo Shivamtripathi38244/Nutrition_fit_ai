@@ -1,3 +1,4 @@
+import csv
 import streamlit as st
 import sys
 import os
@@ -24,32 +25,49 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Replace with your actual API key
 
 # User tracking functions
 def init_user_db():
-	conn = sqlite3.connect("user_data.db")
-	cursor = conn.cursor()
-	cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            email TEXT PRIMARY KEY
-        )
-    """)
-	conn.commit()
-	return conn
+   if not os.path.exists("users.csv"):
+    with open("users.csv", mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Email ID'])
+# 	conn = sqlite3.connect("user_data.db")
+# 	cursor = conn.cursor()
+# 	cursor.execute("""
+#         CREATE TABLE IF NOT EXISTS users (
+#             email TEXT PRIMARY KEY
+#         )
+#     """)
+# 	conn.commit()
+# 	return conn
 
 
-def add_user(conn, email):
-	cursor = conn.cursor()
-	try:
-		cursor.execute("INSERT INTO users (email) VALUES (?)", (email,))
-		conn.commit()
-		return True  # New user added
-	except sqlite3.IntegrityError:
-		return False  # User already exists
+# def add_user(conn, email):
+# 	cursor = conn.cursor()
+# 	try:
+# 		cursor.execute("INSERT INTO users (email) VALUES (?)", (email,))
+# 		conn.commit()
+# 		return True  # New user added
+# 	except sqlite3.IntegrityError:
+# 		return False  # User already exists
+def add_user(email):
+   try:
+      with open("users.csv", mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([email])
+      return True
+   except:
+      return False
+    
 
 
-def get_user_count(conn):
-	cursor = conn.cursor()
-	cursor.execute("SELECT COUNT(*) FROM users")
-	count = cursor.fetchone()[0]
-	return count
+def get_user_count():
+	# cursor = conn.cursor()
+	# cursor.execute("SELECT COUNT(*) FROM users")
+	# count = cursor.fetchone()[0]
+   with open("users.csv", mode='r') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header
+        count = sum(1 for row in reader)
+   return count
 
 
 class RecipeGenerationSystem:
@@ -196,13 +214,13 @@ def main():
 		page_icon="🥗",
 		layout="wide"
 	)
-
+	init_user_db()
 	st.title("🥗 NutriFit AI")
 	st.write("Generate personalized, healthy recipes using AI!")
 	# st.image("C:\Users\91822\OneDrive\Desktop\stimage.png", use_container_width=True)
 
 	# Initialize user tracking database
-	conn = init_user_db()
+	# conn = init_user_db()
 
 	# Sidebar inputs
 	with st.sidebar:
@@ -211,7 +229,7 @@ def main():
 
 		if st.button("Submit Email"):
 			if email:
-				if add_user(conn, email):
+				if add_user(email):
 					st.success("Thank you for signing up!")
 				else:
 					st.info("You are already registered.")
@@ -310,7 +328,7 @@ def main():
 			st.error(f"Error displaying recipe: {str(e)}")
 
 	# Log user count for admin (hidden from public view)
-	total_users = get_user_count(conn)
+	total_users = get_user_count()
 	logger.info(f"Total registered users: {total_users}")
 
 
