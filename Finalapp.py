@@ -6,7 +6,6 @@ from typing import List, Dict, Optional
 from crewai import Agent, Task, Crew, Process, LLM
 import json
 import logging
-import sqlite3
 
 from dotenv import load_dotenv
 import os
