@@ -11,7 +11,12 @@ import os
 import chromadb
 os.system('pip install pysqlite3')
 os.system('pip install --upgrade chromadb')
-client = chromadb.PersistentClient(path="cromadb")
+import chromadb
+
+client = chromadb.Client()
+collection = client.get_collection(name="chroma_docs")
+results = collection.get(ids=["page"])["documents"]
+print(results)
 
 load_dotenv() 
 
