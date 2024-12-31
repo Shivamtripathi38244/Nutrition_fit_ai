@@ -15,12 +15,6 @@ client = chromadb.PersistentClient(path="cromadb")
 
 load_dotenv() 
 
-# Configure logging
-logging.basicConfig(
-	level=logging.INFO,
-	format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 # Set your Groq API key directly here
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Replace with your actual API key
@@ -31,25 +25,7 @@ def init_user_db():
     with open("users.csv", mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['Email ID'])
-# 	conn = sqlite3.connect("user_data.db")
-# 	cursor = conn.cursor()
-# 	cursor.execute("""
-#         CREATE TABLE IF NOT EXISTS users (
-#             email TEXT PRIMARY KEY
-#         )
-#     """)
-# 	conn.commit()
-# 	return conn
 
-
-# def add_user(conn, email):
-# 	cursor = conn.cursor()
-# 	try:
-# 		cursor.execute("INSERT INTO users (email) VALUES (?)", (email,))
-# 		conn.commit()
-# 		return True  # New user added
-# 	except sqlite3.IntegrityError:
-# 		return False  # User already exists
 def add_user(email):
    try:
       with open("users.csv", mode='a', newline='') as file:
@@ -62,9 +38,6 @@ def add_user(email):
 
 
 def get_user_count():
-	# cursor = conn.cursor()
-	# cursor.execute("SELECT COUNT(*) FROM users")
-	# count = cursor.fetchone()[0]
    with open("users.csv", mode='r') as file:
         reader = csv.reader(file)
         next(reader)  # Skip the header
