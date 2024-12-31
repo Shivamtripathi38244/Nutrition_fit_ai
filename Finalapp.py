@@ -10,6 +10,9 @@ import logging
 from dotenv import load_dotenv
 import os
 
+import chromadb
+client = chromadb.PersistentClient(path="cromadb")
+
 load_dotenv() 
 
 # Configure logging
