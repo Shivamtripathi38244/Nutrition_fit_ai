@@ -9,8 +9,11 @@ import os
 from dotenv import load_dotenv
 import os
 import chromadb
-os.system('pip install pysqlite3')
-os.system('pip install --upgrade chromadb')
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import chromadb
 
 client = chromadb.Client()
