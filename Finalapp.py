@@ -1,16 +1,16 @@
 import csv
 import streamlit as st
 import sys
-import os
 from typing import List, Dict, Optional
 from crewai import Agent, Task, Crew, Process, LLM
 import json
 import logging
-
+import os
 from dotenv import load_dotenv
 import os
-
 import chromadb
+
+os.system('pip install --upgrade chromadb')
 client = chromadb.PersistentClient(path="cromadb")
 
 load_dotenv() 
