@@ -1,4 +1,4 @@
-crewai
+streamlit 
+chromadb 
+crewai 
 crewai-tools
-streamlit
-chromadb==0.3.29
