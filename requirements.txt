@@ -42,7 +42,7 @@ durationpy==0.9
 embedchain==0.1.126
 et_xmlfile==2.0.0
 executing==2.1.0
-fastapi==0.115.6
+fastapi==0.85.1
 fastavro==1.10.0
 filelock==3.16.1
 flatbuffers==24.12.23
