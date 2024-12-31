@@ -1,25 +1,17 @@
 import csv
 import streamlit as st
 import sys
+import os
 from typing import List, Dict, Optional
 from crewai import Agent, Task, Crew, Process, LLM
 import json
 import logging
-import os
+
 from dotenv import load_dotenv
 import os
-import chromadb
-
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import chromadb
-
-client = chromadb.Client()
-collection = client.get_collection(name="chroma_docs")
-results = collection.get(ids=["page"])["documents"]
-print(results)
+client = chromadb.PersistentClient(path="cromadb")
 
 load_dotenv() 
 
