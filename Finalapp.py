@@ -9,7 +9,7 @@ import os
 from dotenv import load_dotenv
 import os
 import chromadb
-
+os.system('pip install pysqlite3')
 os.system('pip install --upgrade chromadb')
 client = chromadb.PersistentClient(path="cromadb")
 
